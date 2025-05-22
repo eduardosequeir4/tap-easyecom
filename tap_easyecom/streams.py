@@ -19,6 +19,7 @@ class ProductsStream(EasyEcomStream):
     primary_keys = ["product_id"]
     replication_key = "updated_at"
     additional_params = {"custom_fields": "1"}
+    page_size = 200
 
     schema = th.PropertiesList(
         th.Property("cp_id", th.IntegerType),
@@ -154,6 +155,7 @@ class SuppliersStream(EasyEcomStream):
     name = "suppliers"
     path = "/wms/V2/getVendors"
     primary_keys = ["vendor_c_id"]
+    page_size = 50
 
     schema = th.PropertiesList(
         th.Property("vendor_name", th.StringType),
@@ -220,7 +222,7 @@ class SellOrdersStream(EasyEcomStream):
     start_date = None
     end_date = None
     today = None
-    page_size = 50
+    page_size = 250
 
     schema = th.PropertiesList(
         th.Property("suborders", th.CustomType({"type": ["array", "string"]})),
@@ -375,6 +377,7 @@ class BuyOrdersStream(EasyEcomStream):
     path = "/wms/V2/getPurchaseOrderDetails"
     primary_keys = ["po_id"]
     replication_key = "po_updated_date"
+    page_size = 10
 
     schema = th.PropertiesList(
         th.Property("po_items", th.CustomType({"type": ["array", "string"]})),
