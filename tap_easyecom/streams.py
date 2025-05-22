@@ -18,6 +18,7 @@ class ProductsStream(EasyEcomStream):
     path = "/Products/GetProductMaster"
     primary_keys = ["product_id"]
     replication_key = "updated_at"
+    date_filter_param = "updated_after"
     additional_params = {"custom_fields": "1"}
     page_size = 200
 
