@@ -18,9 +18,7 @@ class ProductsStream(EasyEcomStream):
     path = "/Products/GetProductMaster"
     primary_keys = ["product_id"]
     replication_key = "updated_at"
-    date_filter_param = "updated_after"
     additional_params = {"custom_fields": "1"}
-    page_size = 200
 
     schema = th.PropertiesList(
         th.Property("cp_id", th.IntegerType),
@@ -156,7 +154,6 @@ class SuppliersStream(EasyEcomStream):
     name = "suppliers"
     path = "/wms/V2/getVendors"
     primary_keys = ["vendor_c_id"]
-    page_size = 50
 
     schema = th.PropertiesList(
         th.Property("vendor_name", th.StringType),
@@ -223,7 +220,7 @@ class SellOrdersStream(EasyEcomStream):
     start_date = None
     end_date = None
     today = None
-    page_size = 250
+    page_size = 50
 
     schema = th.PropertiesList(
         th.Property("suborders", th.CustomType({"type": ["array", "string"]})),
@@ -378,7 +375,6 @@ class BuyOrdersStream(EasyEcomStream):
     path = "/wms/V2/getPurchaseOrderDetails"
     primary_keys = ["po_id"]
     replication_key = "po_updated_date"
-    page_size = 10
 
     schema = th.PropertiesList(
         th.Property("po_items", th.CustomType({"type": ["array", "string"]})),
@@ -463,7 +459,7 @@ class ReturnsStream(EasyEcomStream):
         th.Property("credit_note_number", th.StringType),
         th.Property("marketplace_credit_note_num", th.StringType),
         th.Property("marketplace_invoice_num", th.StringType),
-        th.Property("batch_id", th.StringType),
+        th.Property("batch_id", th.IntegerType),
         th.Property("batch_created_at", th.DateTimeType),
         th.Property("payment_mode", th.StringType),
         th.Property("payment_mode_id", th.IntegerType),
@@ -488,6 +484,6 @@ class ReturnsStream(EasyEcomStream):
         th.Property("order_quantity", th.IntegerType),
         th.Property("total_invoice_amount", th.NumberType),
         th.Property("total_invoice_tax", th.NumberType),
-        th.Property("invoice_collectable_amount", th.IntegerType),
+        th.Property("invoice_collectable_amount", th.NumberType),
         th.Property("items", th.CustomType({"type": ["array", "string"]})),
     ).to_dict()
